@@ -1,5 +1,6 @@
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from transformers import pipeline
 from langdetect import detect
 import pdfplumber
@@ -8,12 +9,22 @@ from PIL import Image
 from docx import Document
 import io
 
-# ✅ Specify the path to your Tesseract installation
+# ✅ Path to Tesseract installation (Windows)
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
+# ✅ Initialize FastAPI app
 app = FastAPI(
     title="StudyMate AI",
     description="Summarizer, Flashcards, and Quiz generator with multi-language & image support"
+)
+
+# ✅ Enable CORS (so frontend can call this API)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # For testing. Replace with your frontend URL in production.
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # ✅ Load summarization model
@@ -69,7 +80,7 @@ def generate_quiz(text: str):
     return quiz
 
 
-# 🚀 API Endpoint
+# 🚀 Main API Endpoint
 @app.post("/analyze/")
 async def analyze_file(file: UploadFile = File(...)):
     try:
@@ -93,6 +104,7 @@ async def analyze_file(file: UploadFile = File(...)):
         return JSONResponse(status_code=500, content={"error": str(e)})
 
 
+# 🏠 Root route
 @app.get("/")
 def home():
     return {"message": "Welcome to StudyMate AI — upload PDF, DOCX, or image at /docs"}
