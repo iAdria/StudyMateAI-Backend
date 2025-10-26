@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: studymateai-backend
+    runtime: python
+    plan: free  # change to "starter" if you need more memory
+    buildCommand: pip install -r requirements.txt
+    startCommand: bash start.sh
