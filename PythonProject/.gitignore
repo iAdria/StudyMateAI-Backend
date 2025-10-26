@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+pip-log.txt
+.env
+*.sqlite3
+*.db
+model/       # if you saved any large weights locally

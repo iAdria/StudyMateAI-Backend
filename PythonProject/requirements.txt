@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+transformers
+torch
+pdfplumber
+pytesseract
+pillow
+python-docx
+langdetect
+nltk
+sentencepiece
