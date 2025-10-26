@@ -4,8 +4,7 @@ transformers
 torch
 pdfplumber
 pytesseract
-pillow
+Pillow
 python-docx
 langdetect
-nltk
-sentencepiece
+python-multipart
